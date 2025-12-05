@@ -119,10 +119,6 @@ jobs:
         run: brew install ${{ matrix.packages }}
         if: matrix.packages != '' && matrix.os == 'macos-latest'
 
-      - name: Make Libs
-        run: make makelibs ARCH=arm STRIPFLAGS=
-        if: matrix.packages != '' && matrix.os == 'macos-latest'
-
       - name: Build dependencies
         working-directory: engine
         run: make FTE_TARGET=${{ matrix.fte_target }} makelibs ${{ matrix.args }}
@@ -133,7 +129,7 @@ jobs:
       - name: Build ${{ matrix.name }}
         working-directory: engine
         run: |
-          make -j ${{ steps.cpu-cores.outputs.count }} FTE_TARGET=${{ matrix.fte_target }} ${{ matrix.make_targets }} ${{ matrix.args }} LINK_EZHUD=1 LINK_OPENSSL=1
+          make -j ${{ steps.cpu-cores.outputs.count }} makelibs FTE_TARGET=${{ matrix.fte_target }} ${{ matrix.make_targets }} ${{ matrix.args }} LINK_EZHUD=1 LINK_OPENSSL=1
 
       - name: Attach macOS docs
         run: |
@@ -143,7 +139,7 @@ jobs:
           xattr -d com.apple.quarantine fteqw-glsdl2
           
           If you don't have SDL2 installed, run:
-          brew install sdl2
+          brew install sdl3
           EOF
         if: matrix.os == 'macos-latest'
 
