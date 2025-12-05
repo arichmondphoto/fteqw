@@ -74,10 +74,10 @@ jobs:
             os: ubuntu-latest
             packages: "binutils-mingw-w64-x86-64 gcc-mingw-w64-x86-64 g++-mingw-w64-x86-64"
           - name: macos-arm64
-            fte_target: SDL3
+            fte_target: SDL2
             make_targets: "gl-rel sv-rel qcc-rel"
             args: "ARCH=arm STRIPFLAGS="
-            packages: "sdl3"
+            packages: "sdl2"
             os: macos-latest
 
     name: make-${{ matrix.name }}
@@ -123,11 +123,6 @@ jobs:
         working-directory: engine
         run: make FTE_TARGET=${{ matrix.fte_target }} makelibs ${{ matrix.args }}
         if: steps.cache.outputs.cache-hit != 'true'
-
-      - name: Build Dependencies (MacOS)
-        working-directory: engine
-        run: make makelibs
-        if: matrix.fte_target == 'macos-latest'
           
       - uses: ammaraskar/gcc-problem-matcher@0.3.0
 
@@ -140,11 +135,11 @@ jobs:
         run: |
           cat <<EOF > engine/release/fte_macos.txt
           To allow executables to run issue for example:
-          chmod +x fteqw-glsdl3
-          xattr -d com.apple.quarantine fteqw-glsdl3
+          chmod +x fteqw-glsdl2
+          xattr -d com.apple.quarantine fteqw-glsdl2
           
-          If you don't have SDL3 installed, run:
-          brew install sdl3
+          If you don't have SDL2 installed, run:
+          brew install sdl2
           EOF
         if: matrix.os == 'macos-latest'
 
