@@ -75,7 +75,7 @@ jobs:
             packages: "binutils-mingw-w64-x86-64 gcc-mingw-w64-x86-64 g++-mingw-w64-x86-64"
           - name: macos-arm64
             fte_target: SDL3
-            make_targets: "m-rel"
+            make_targets: "gl-rel sv-rel qcc-rel"
             args: "ARCH=arm STRIPFLAGS="
             packages: "sdl3"
             os: macos-latest
@@ -117,6 +117,10 @@ jobs:
 
       - name: Install dependencies (macos)
         run: brew install ${{ matrix.packages }}
+        if: matrix.packages != '' && matrix.os == 'macos-latest'
+
+        - name: Make Libs
+        run: make makelibs ARCH=arm STRIPFLAGS=
         if: matrix.packages != '' && matrix.os == 'macos-latest'
 
       - name: Build dependencies
