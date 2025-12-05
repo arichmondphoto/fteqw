@@ -127,7 +127,7 @@ jobs:
       - name: Build Dependencies (MacOS)
         working-directory: engine
         run: make makelibs
-        if: matrix.fte_target == "macos-latest"
+        if: matrix.fte_target == 'macos-latest'
           
       - uses: ammaraskar/gcc-problem-matcher@0.3.0
 
