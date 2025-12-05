@@ -77,7 +77,7 @@ jobs:
             fte_target: SDL3
             make_targets: "gl-rel sv-rel qcc-rel"
             args: "ARCH=arm STRIPFLAGS="
-            packages: "sdl2"
+            packages: "sdl3"
             os: macos-latest
 
     name: make-${{ matrix.name }}
